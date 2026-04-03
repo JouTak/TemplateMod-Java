@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "${MOD_ID}",
+  "version": "${VERSION}",
+  "name": "${MOD_NAME}",
+  "description": "Заготовка для мода на JouTak (joutak.ru)",
+  "authors": [
+    "JouTak"
+  ],
+  "contact": {
+    "homepage": "https://joutak.ru",
+    "sources": "${WEBSITE}"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ru.joutak.templatemod.TemplateMod"
+    ],
+    "client": [
+      "ru.joutak.templatemod.client.TemplateModClient"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
