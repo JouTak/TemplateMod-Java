@@ -1,9 +1,12 @@
 [versions]
 jdk = "21"
 minecraft = "1.21.11"
-fabric-loader = "0.16.9"
-fabric-api = "0.112.2+1.21.11"
-loom = "1.7.4"
+fabricLoader = "0.18.1"
+fabricApi = "0.141.0+1.21.11"
+loom = "1.15-SNAPSHOT"
 
 [libraries]
-fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+fabricApi = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabricApi" }
+
+[plugins]
+fabric-loom = { id = "net.fabricmc.fabric-loom-remap", version.ref = "loom" }

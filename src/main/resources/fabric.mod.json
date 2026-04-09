@@ -5,7 +5,7 @@
   "name": "${MOD_NAME}",
   "description": "Заготовка для мода на JouTak (joutak.ru)",
   "authors": [
-    "JouTak"
+    "Slippers_friend"
   ],
   "contact": {
     "homepage": "https://joutak.ru",
@@ -15,15 +15,15 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ru.joutak.templatemod.TemplateMod"
+      "ru.joutak.mod.ModCheckerMain"
     ],
     "client": [
-      "ru.joutak.templatemod.client.TemplateModClient"
+      "ru.joutak.mod.client.ModCheckerClient"
     ]
   },
   "mixins": [],
   "depends": {
-    "fabricloader": ">=0.15.0",
+    "fabricloader": ">=0.18.1",
     "minecraft": "~1.21.11",
     "java": ">=21",
     "fabric-api": "*"

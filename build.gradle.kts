@@ -8,7 +8,7 @@ project.group = group
 project.version = version
 
 plugins {
-    id("fabric-loom") version "1.7.4"
+    alias(libs.plugins.fabric.loom)
     java
 }
 
