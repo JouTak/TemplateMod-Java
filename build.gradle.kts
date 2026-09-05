@@ -8,9 +8,11 @@ project.group = group
 project.version = version
 
 plugins {
-    id("fabric-loom") version "1.7.4"
+    alias(libs.plugins.fabric.loom)
     java
 }
+
+val javaVersion = libs.versions.jdk.get().toInt()
 
 repositories {
     mavenCentral()
@@ -19,17 +21,20 @@ repositories {
 
 dependencies {
     minecraft("com.mojang:minecraft:${libs.versions.minecraft.get()}")
-    mappings(loom.officialMojangMappings())
-    modImplementation("net.fabricmc:fabric-loader:${libs.versions.fabricLoader.get()}")
-    modImplementation(libs.fabricApi)
+    implementation("net.fabricmc:fabric-loader:${libs.versions.fabric.loader.get()}")
+    implementation(libs.fabric.api)
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(libs.versions.jdk.get())
+        languageVersion = JavaLanguageVersion.of(javaVersion)
     }
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.toVersion(javaVersion)
+    targetCompatibility = JavaVersion.toVersion(javaVersion)
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(javaVersion)
 }
 
 tasks.processResources {
