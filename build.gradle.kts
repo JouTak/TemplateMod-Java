@@ -17,12 +17,42 @@ val javaVersion = libs.versions.jdk.get().toInt()
 repositories {
     mavenCentral()
     maven("https://maven.fabricmc.net/") { name = "Fabric" }
+    maven("https://maven.terraformersmc.com/releases/") {
+        name = "TerraformersMC"
+    }
+
+    maven("https://maven.shedaniel.me/") {
+        name = "Shedaniel"
+    }
+    maven("https://maven.gegy.dev") {
+        name = "Gegy"
+    }
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:${libs.versions.minecraft.get()}")
     implementation("net.fabricmc:fabric-loader:${libs.versions.fabric.loader.get()}")
     implementation(libs.fabric.api)
+    compileOnly(libs.modmenu) {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
+
+    compileOnly(libs.cloth.config) {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
+
+    localRuntime(libs.modmenu) {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
+
+    localRuntime(libs.cloth.config) {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
+    compileOnly(libs.lambdynamiclights.api)
+
+    localRuntime(libs.lambdynamiclights.runtime) {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
 }
 
 java {

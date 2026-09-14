@@ -4,9 +4,16 @@ minecraft = "26.1.2"
 fabric-loader = "0.19.5"
 fabric-api = "0.155.2+26.1.2"
 loom = "1.17.20"
+modmenu = "18.0.0"
+cloth-config = "26.1.154"
+lambdynamiclights = "4.11.2+26.1.2"
 
 [libraries]
 fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
+cloth-config = { module = "me.shedaniel.cloth:cloth-config-fabric", version.ref = "cloth-config" }
+lambdynamiclights-api = { module = "dev.lambdaurora.lambdynamiclights:lambdynamiclights-api", version.ref = "lambdynamiclights" }
+lambdynamiclights-runtime = { module = "dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime", version.ref = "lambdynamiclights" }
 
 [plugins]
 fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "loom" }

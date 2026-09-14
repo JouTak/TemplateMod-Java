@@ -18,6 +18,6 @@ public class TemplateMod implements ModInitializer {
     @Override
     public void onInitialize() {
         instance = this;
-        LOGGER.info("Mod {} initialized!", MOD_ID);
+        LOGGER.info("Мод {} загружен", MOD_ID);
     }
 }

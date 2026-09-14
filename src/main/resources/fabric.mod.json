@@ -3,22 +3,29 @@
   "id": "${MOD_ID}",
   "version": "${VERSION}",
   "name": "${MOD_NAME}",
-  "description": "Заготовка для мода на JouTak (joutak.ru)",
+  "icon": "assets/templatemod/textures/icon.png",
+  "description": "Records your route, marks it with arrows, and helps you find your way back.",
   "authors": [
-    "JouTak"
+    "WeNeedFood"
   ],
   "contact": {
     "homepage": "https://joutak.ru",
     "sources": "${WEBSITE}"
   },
   "license": "MIT",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
       "ru.joutak.templatemod.TemplateMod"
     ],
     "client": [
       "ru.joutak.templatemod.client.TemplateModClient"
+    ],
+    "modmenu": [
+      "ru.joutak.templatemod.compat.ModMenuIntegration"
+    ],
+    "lambdynlights:initializer": [
+      "ru.joutak.templatemod.compat.DynamicLightsIntegration"
     ]
   },
   "mixins": [],
