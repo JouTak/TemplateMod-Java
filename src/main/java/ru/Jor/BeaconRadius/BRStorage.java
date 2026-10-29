@@ -1,5 +1,9 @@
 package ru.Jor.BeaconRadius;
 
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.level.Level;
+import ru.Jor.BeaconRadius.BRStorage;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,28 +19,32 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BRStorage {
     private static File StorageDir = new File(FabricLoader.getInstance().getGameDir().toFile(),"BeaconRadius");
 
-    private static List<BlockPos> blockCache = new ArrayList<>();
+    public static Map<BlockPos,Boolean> blockCache = new HashMap<>();
 
     public static void Toggle(BlockPos block){
-        //if(blockCache.isEmpty()){
-        //    blockCache.add(block);
-        //} else
-        if(blockCache.contains(block)){
+        if(blockCache.containsKey(block)){
             blockCache.remove(block);
             BeaconRadius.LOGGER.info("removed block");
         }else{
-            blockCache.add(block);
+            blockCache.put(block,true);
             BeaconRadius.LOGGER.info("added block");
         }
         save();
     }
+    public static void setVisibility(BlockPos block, Boolean visible){
+        blockCache.replace(block,visible);
+    }
 
-    public static void onJoin(){
+
+    public static void onJoin()
+    {
         load();
     }
 
@@ -49,13 +57,13 @@ public class BRStorage {
         }
         try(FileWriter writer = new FileWriter(worldStorage)){
             JsonArray array = new JsonArray();
-            for(BlockPos block : blockCache){
+            blockCache.forEach((block,visible)->{
                 JsonObject object = new JsonObject();
                 object.addProperty("x",block.getX());
                 object.addProperty("y",block.getY());
                 object.addProperty("z",block.getZ());
-                array.add(object);
-            }
+                array.add(object);}
+            );
             new GsonBuilder().setPrettyPrinting().create().toJson(array,writer);
         } catch(Exception e) {
             BeaconRadius.LOGGER.error("Error while writing file " + e.toString());
@@ -75,7 +83,7 @@ public class BRStorage {
             JsonArray array = JsonParser.parseReader(reader).getAsJsonArray();
             for(JsonElement element : array){
                 JsonObject object = element.getAsJsonObject();
-                blockCache.add(new BlockPos(object.get("x").getAsInt(),object.get("y").getAsInt(),object.get("z").getAsInt()));
+                blockCache.put(new BlockPos(object.get("x").getAsInt(),object.get("y").getAsInt(),object.get("z").getAsInt()),false);
             }
         } catch(Exception e) {
            BeaconRadius.LOGGER.error("Error while reading file " + e.toString());
@@ -86,7 +94,6 @@ public class BRStorage {
 
     private static File FileName(){
         Minecraft client = Minecraft.getInstance();
-
         if (client.getCurrentServer()!=null){
             return new File(StorageDir,client.getCurrentServer().ip.replace(".","_").replace(":","-").toString()+".json");
 

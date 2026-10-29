@@ -1,16 +1,16 @@
 package ru.Jor.BeaconRadius;
 
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLevelEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.datafix.fixes.TextComponentStringifiedFlagsFix;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.block.Blocks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+
 
 import java.awt.*;
 
@@ -43,9 +43,10 @@ public class BeaconRadius implements ModInitializer {
 
         ClientLevelEvents.AFTER_CLIENT_LEVEL_CHANGE.register((player, world)->{
             if(player.getCurrentServer()!=null||player.getCurrentServer()!=null){
-                BRStorage.onJoin();
+               BRStorage.onJoin();
             }
         });
+
         LOGGER.info("Mod {} initialized!", MOD_ID);
     }
 
