@@ -2,6 +2,7 @@ package ru.Jor.BeaconRadius;
 
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientBlockEntityEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLevelEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -42,11 +43,10 @@ public class BeaconRadius implements ModInitializer {
                 });
 
         ClientLevelEvents.AFTER_CLIENT_LEVEL_CHANGE.register((player, world)->{
-            if(player.getCurrentServer()!=null||player.getCurrentServer()!=null){
+            if(player.getCurrentServer()!=null||player.getSingleplayerServer()!=null){
                BRStorage.onJoin();
             }
         });
-
         LOGGER.info("Mod {} initialized!", MOD_ID);
     }
 

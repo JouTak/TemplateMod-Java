@@ -60,15 +60,16 @@ public class RenderAndDraw {
         boolean hasContent=false;
         List<BlockPos> toDel = new ArrayList<>();
         if (world != null) {
-            for(Map.Entry<BlockPos,Boolean> entry:BRStorage.blockCache.entrySet()) {
-                if (entry.getValue()) {
-                    if (world.getBlockState(entry.getKey()).is(Blocks.BEACON)) {
-                        if (renderMyObject(matrices.last().pose(), buffer, entry.getKey(), ((BeaconBlockEntityAccessor) world.getBlockEntity(entry.getKey())).BeaconRadius$getLevels()))
+            for(BlockPos block:BRStorage.blockCache) {
+                if (world.isLoaded(block)){
+                    if (world.getBlockState(block).is(Blocks.BEACON)) {
+                        if (renderMyObject(matrices.last().pose(), buffer, block,
+                                ((BeaconBlockEntityAccessor) world.getBlockEntity(block)).BeaconRadius$getLevels()))
                             hasContent = true;
                     }
                     else
-                        toDel.add(entry.getKey());
-                }
+                        toDel.add(block);
+                    }
             }
             toDel.forEach(block ->{BRStorage.blockCache.remove(block);});
             if(!hasContent)
