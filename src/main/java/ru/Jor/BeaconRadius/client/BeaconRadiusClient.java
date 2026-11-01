@@ -10,7 +10,7 @@ public class BeaconRadiusClient implements ClientModInitializer {
     @Override
     public void onInitializeClient(){
         BeaconRadius.LOGGER.info("Client side of mod {} initialized!", BeaconRadius.MOD_ID);
-        LevelRenderEvents.AFTER_TRANSLUCENT_TERRAIN.register(RenderAndDraw::renderAndDraw);
+        LevelRenderEvents.BEFORE_TRANSLUCENT_TERRAIN.register(RenderAndDraw::renderAndDraw);
     }
 
 
