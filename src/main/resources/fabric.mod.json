@@ -3,25 +3,27 @@
   "id": "${MOD_ID}",
   "version": "${VERSION}",
   "name": "${MOD_NAME}",
-  "description": "Заготовка для мода на JouTak (joutak.ru)",
+  "description": "Visualase beacon AOE",
   "authors": [
-    "JouTak"
+    "Jor"
   ],
   "contact": {
-    "homepage": "https://joutak.ru",
+    "homepage": "goshavas2000@ya.ru",
     "sources": "${WEBSITE}"
   },
   "license": "MIT",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ru.joutak.templatemod.TemplateMod"
+      "ru.Jor.BeaconRadius.BeaconRadius"
     ],
     "client": [
-      "ru.joutak.templatemod.client.TemplateModClient"
+      "ru.Jor.BeaconRadius.client.BeaconRadiusClient"
     ]
   },
-  "mixins": [],
+  "mixins": [
+    "BeaconRadius.mixins-client.json"
+  ],
   "depends": {
     "fabricloader": ">=0.19.5",
     "minecraft": "~26.1.2",
