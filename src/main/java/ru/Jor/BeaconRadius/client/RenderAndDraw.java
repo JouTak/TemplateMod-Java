@@ -14,15 +14,13 @@ import net.minecraft.client.renderer.MappableRingBuffer;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.BeaconBeamBlock;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
-import org.joml.Matrix4fc;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.system.MemoryUtil;
-import org.spongepowered.asm.mixin.injection.struct.InjectorGroupInfo;
 import ru.Jor.BeaconRadius.BRStorage;
 import ru.Jor.BeaconRadius.mixin.accessor.BeaconBlockEntityAccessor;
 import ru.Jor.BeaconRadius.BeaconRadius;
@@ -61,23 +59,23 @@ public class RenderAndDraw {
         }
 
         boolean hasContent=false;
-        List<BlockPos> toDel = new ArrayList<>();
+        Map<BlockPos, Identifier> toDel = new HashMap<>();
 
         if (world != null) {
-            for(BlockPos block:BRStorage.blockCache) {
-                if (world.isLoaded(block)){
-                    if (world.getBlockState(block).is(Blocks.BEACON)) {
-                        if (!((BeaconBlockEntityAccessor) world.getBlockEntity(block)).BeaconRadius$getbeamSections().isEmpty())
-                            if (renderMyObject(matrices.last(), buffer, block,
-                                ((BeaconBlockEntityAccessor) world.getBlockEntity(block)).BeaconRadius$getLevels(),world.getGameTime(),
+            for(Map.Entry<BlockPos,Identifier> block:BRStorage.blockCache.entrySet()) {
+                if (world.isLoaded(block.getKey())&&(block.getValue().equals(world.dimension().identifier()))){
+                    if (world.getBlockState(block.getKey()).is(Blocks.BEACON)) {
+                        if (!((BeaconBlockEntityAccessor) world.getBlockEntity(block.getKey())).BeaconRadius$getbeamSections().isEmpty())
+                            if (renderMyObject(matrices.last(), buffer, block.getKey(),
+                                ((BeaconBlockEntityAccessor) world.getBlockEntity(block.getKey())).BeaconRadius$getLevels(),world.getGameTime(),
                                 world.getMaxY()))
                                 hasContent = true;
                     }
                     else
-                        toDel.add(block);
-                    }
+                        toDel.put(block.getKey(),block.getValue());
+                }
             }
-            toDel.forEach(block ->{BRStorage.blockCache.remove(block);});
+            toDel.forEach((block,dim) ->{BRStorage.blockCache.remove(block,dim);});
             if(!hasContent)
                 return false;
         }

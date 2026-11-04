@@ -2,10 +2,9 @@ package ru.Jor.BeaconRadius;
 
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientBlockEntityEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLevelEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.block.Blocks;
 import org.slf4j.Logger;
@@ -31,10 +30,10 @@ public class BeaconRadius implements ModInitializer {
         instance = this;
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
 
-                        if (player.isCrouching()) {
+                        if (Minecraft.getInstance().options.keyShift.isDown()) {
                             if (world.getBlockState(hitResult.getBlockPos()).is(Blocks.BEACON)) {
                                 if(world.isClientSide()) {
-                                    BRStorage.Toggle(hitResult.getBlockPos());
+                                    BRStorage.Toggle(hitResult.getBlockPos(),world.dimension().identifier());
                                 }
                                 return InteractionResult.SUCCESS;
                             }

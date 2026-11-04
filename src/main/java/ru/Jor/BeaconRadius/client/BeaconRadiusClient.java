@@ -3,7 +3,6 @@ package ru.Jor.BeaconRadius.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 
-
 import ru.Jor.BeaconRadius.BeaconRadius;
 public class BeaconRadiusClient implements ClientModInitializer {
 
